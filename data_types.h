@@ -2,10 +2,10 @@
 #define DATA_TYPES_H_
 #include <stdint.h>
 
-#define USE_NOITOM_SERVER_IP    1                   // 1：server端在Noitom端监听并收发数据， 0：server端在华为CloudVR主机端监听并收发数据
+#define USE_NOITOM_SERVER_IP    0                   // 1：server端在Noitom端监听并收发数据， 0：server端在华为CloudVR主机端监听并收发数据
 #define ZMQ_SERVER_SEND_PORT    8011                // server send port
 #define ZMQ_SERVER_RECV_PORT    8012                // server receive port
-#define SOCK_SERVER_LISTEN_PORT 9011                // socket server listen port
+#define SOCK_SERVER_LISTEN_PORT 8013                // socket server listen port
 #define ZMQ_MSG_FMT             "ssb"               // zmq message format
 #define ZMQ_MSG_TYP             ""                  // receive all type of message
 

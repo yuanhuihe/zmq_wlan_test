@@ -91,18 +91,18 @@ void fn_sock_recv(void* param)
     char* buffer = new char[len];
     buffer[0] = 0;
 
-    int valread;
+    int iResult;
     char *hello = "Hello from client";
-    while (true)
+    do
     {
         send(sock_fd, hello, strlen(hello), 0);
         printf("Hello message sent\n");
 
-        valread = read(sock_fd, buffer, len);
+        iResult = recv(sock_fd, buffer, len, 0);
         printf("%s\n", buffer);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    }
+    }while (iResult > 0);
 
     delete buffer;
     buffer = nullptr;

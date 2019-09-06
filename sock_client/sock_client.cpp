@@ -54,13 +54,22 @@ void fn_sock_client()
     char* buffer = new char[len];
     buffer[0] = 0;
 
-    int valread;
-    while (true)
+    int iResult;
+    do
     {
-        valread = read(client_fd, buffer, len);
+        iResult = recv(client_fd, buffer, len, 0);
+        if (iResult > 0)
+            printf("Bytes received: %d\n", iResult);
+        else if (iResult == 0)
+            printf("Connection closed\n");
+        else
+            printf("recv failed: %d\n", WSAGetLastError());
         printf("%s\n", buffer);
-        send(client_fd, buffer, strlen(buffer), 0);
-    }
+
+        // echo
+        send(client_fd, buffer, iResult, 0);
+
+    } while (iResult > 0);
 
     delete buffer;
     buffer = nullptr;
