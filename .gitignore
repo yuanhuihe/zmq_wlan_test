@@ -1,0 +1,5 @@
+/x64
+/zmq_client/x64
+/zmq_server/x64
+/sock_client/x64
+/sock_server/x64
