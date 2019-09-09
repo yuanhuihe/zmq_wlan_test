@@ -84,7 +84,8 @@ void fn_zmq_server_recv()
         sMessage* msg = (sMessage*)data;
         double latency = (time_stamp.QuadPart - msg->time_stamp) * 1000.0 / __cpuFreq.QuadPart; // ms
 
-        printf("[recv] cmd: %s, id: %s, eclipsed: %0.2f ms, [client CPU freq: %jd, time stamp: %jd]\n", cmd, id, latency, msg->recv_cpu_freq, msg->recv_time_stamp);
+        //printf("[recv] cmd: %s, id: %s, eclipsed: %0.2f ms, [client CPU freq: %jd, time stamp: %jd]\n", cmd, id, latency, msg->recv_cpu_freq, msg->recv_time_stamp);
+        printf("[recv] cmd: %s, id: %s, eclipsed: %0.2f ms\n", cmd, id, latency);
 
         zstr_free(&cmd);
         zstr_free(&id);

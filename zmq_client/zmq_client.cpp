@@ -9,11 +9,13 @@
 
 #pragma  comment(lib,"ws2_32.lib")
 
+std::string remote_server_ip;
+
 void fn_zmq_recv()
 {
     std::string msg_type = "";      // 所有消息
-    std::string url_recv = ">tcp://" + std::string(SERVER_IP) + ":" + std::to_string(ZMQ_SERVER_SEND_PORT);
-    std::string url_send = ">tcp://" + std::string(SERVER_IP) + ":" + std::to_string(ZMQ_SERVER_RECV_PORT);
+    std::string url_recv = ">tcp://" + remote_server_ip + ":" + std::to_string(ZMQ_SERVER_SEND_PORT);
+    std::string url_send = ">tcp://" + remote_server_ip + ":" + std::to_string(ZMQ_SERVER_RECV_PORT);
 
     //std::string url_recv = "tcp://127.0.0.1:8012";
     zsock_t* sock_sub = zsock_new_sub(url_recv.c_str(), ZMQ_MSG_TYP);
@@ -68,8 +70,18 @@ void fn_zmq_recv()
     zsock_destroy(&sock_sub);
 }
 
-int main()
+int main(int argc, char *argv[])
 {
+    if (argc <= 1)
+    {
+        printf("The IP of remote server is expected\n");
+        getchar();
+        return -1;
+    }
+
+    // get inputed server ip
+    remote_server_ip = argv[1];
+
     printf("Client app\n");
     std::thread zmq_r(fn_zmq_recv);
 

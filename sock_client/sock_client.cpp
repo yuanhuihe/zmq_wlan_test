@@ -9,6 +9,8 @@
 
 #pragma  comment(lib,"ws2_32.lib")
 
+std::string remote_server_ip;
+
 void fn_sock_client()
 {
     int client_fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -26,7 +28,7 @@ void fn_sock_client()
     serv_addr.sin_port = htons(SOCK_SERVER_LISTEN_PORT);
 
     // Convert IPv4 and IPv6 addresses from text to binary form 
-    if (inet_pton(AF_INET, SERVER_IP, &serv_addr.sin_addr) <= 0)
+    if (inet_pton(AF_INET, remote_server_ip.c_str(), &serv_addr.sin_addr) <= 0)
     {
         DWORD err = GetLastError();
         printf("inet_pton failed: Invalid address or address not supported. Error %d\n", err);
@@ -77,8 +79,18 @@ void fn_sock_client()
     closesocket(client_fd);
 }
 
-int main()
+int main(int argc, char *argv[])
 {
+    if (argc <= 1)
+    {
+        printf("The IP of remote server is expected\n");
+        getchar();
+        return -1;
+    }
+
+    // get inputed server ip
+    remote_server_ip = argv[1];
+
     WORD wVersionRequested;
     WSADATA wsaData;
     wVersionRequested = MAKEWORD(2, 2);
